@@ -479,22 +479,12 @@ cd backend
 
 ### Team Details
 
-<<<<<<< HEAD
-| Sr. No. | Student Name | Roll Number | Role / Contribution |
-| :---: | :--- | :--- | :--- |
-| 1 | *Tanushree Burde* | *Roll No 2* | Frontend Architecture, UI/UX & WebRTC Camera Scanner |
-| 2 | *Nidhi Bhayani* | *Roll No 3* | Security Engine, SSRF Guard & Redirect Tracker |
-| 3 | *Shivansh Gupta* | *Roll No 5* | Heuristics (WHOIS, Lookalike, Forms) & Test Suite |
-| 4 | *Shreyansh Dewangan* | *Roll No 24* | Database Persistence, API Routing & Documentation |
-
-=======
 | Sr. No. | Student Name | Roll Number |
 | :---: | :--- | :--- |
 | 1 | Tanushree Burde | D1-02 |
 | 2 | Nidhi Bhayani | D1-03 |
 | 3 | Shivansh Gupta | D1-05 |
 | 4 | Shreyansh Dewangan | D1-24 |
->>>>>>> 415b3ae (docs: finalize README with screenshots, team details, and verified test results)
 
 ---
 
