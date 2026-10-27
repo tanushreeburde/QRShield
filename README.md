@@ -8,6 +8,7 @@
 - [Overview](#-overview)
 - [The Problem: Why Quishing is Dangerous](#-the-problem-why-quishing-is-dangerous)
 - [Key Features](#-key-features)
+- [Application Screenshots](#-application-screenshots)
 - [The 6-Layer Security Inspection Engine](#-the-6-layer-security-inspection-engine)
 - [Smart Non-URL QR Handling](#-smart-non-url-qr-handling)
 - [System Architecture](#-system-architecture)
@@ -18,7 +19,7 @@
 - [API Endpoints](#-api-endpoints)
 - [Automated Testing & Verification](#-automated-testing--verification)
 - [Team Members & College Submission](#-team-members--college-submission)
-- [Disclaimer & License](#-disclaimer--license)
+- [Disclaimer & Academic Notice](#-disclaimer--academic-notice)
 
 ---
 
@@ -52,7 +53,7 @@ Unlike traditional scanner apps that blindly open embedded links, QRShield provi
 - **Direct URL Input**: Direct input for suspicious URLs with automatic URL normalization (e.g., auto-prepending `https://`).
 
 ### 2. Progressive Disclosure UI
-- **Low Risk (Score 0–29)**: Clean green status badge, verified final destination, direct **"Open URL"** button, and technical details button.
+- **Low Risk (Score 0–29)**: Clean green status badge, verified final destination, direct **"Open Link"** button, and technical details button.
 - **Suspicious (Score 30–69)**: Highlights the primary concerns with an **"Open Anyway"** confirmation modal and technical inspection breakdown.
 - **High Risk (Score 70+ or Critical Flag)**: Bold red alert highlighting specific threats (e.g., typosquatting, credential harvesting, SSRF attempt) advising the user not to proceed.
 - **Diagnostic Drawer ("Why?")**: Comprehensive diagnostic view featuring an interactive redirect hop visualizer, scored evidence table with severity badges (`HIGH`, `MEDIUM`, `LOW`, `INFO`), and safety disclaimers.
@@ -63,11 +64,26 @@ Unlike traditional scanner apps that blindly open embedded links, QRShield provi
 
 ---
 
+## 📸 Application Screenshots
+
+Captured directly from the live running QRShield application:
+
+### 1. Main Scanner Interface
+![Main Scanner Interface](docs/screenshots/scanner_view.png)
+
+### 2. Safe URL Analysis Result
+![Safe URL Verdict](docs/screenshots/verdict_safe.png)
+
+### 3. High-Risk Phishing Threat Result
+![High-Risk Phishing Alert](docs/screenshots/verdict_suspicious.png)
+
+---
+
 ## 🔍 The 6-Layer Security Inspection Engine
 
 Each scanned URL passes through six deterministic analysis modules:
 
-```
+```text
  Scanned URL ─► [ Layer 1: Syntax & Obfuscation Heuristics ]
                      │
              [ Layer 2: Multi-Hop Redirect Tracker + SSRF Guard ]
@@ -128,7 +144,7 @@ QRShield automatically detects and securely parses non-hyperlink QR formats with
 
 ## 🏗️ System Architecture
 
-```
+```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        QRShield Web Frontend                           │
 │     (Responsive HTML5 • Vanilla CSS3 • Vanilla ES6 JavaScript)         │
@@ -200,14 +216,20 @@ QRShield automatically detects and securely parses non-hyperlink QR formats with
 
 ## 📁 Project Directory Structure
 
-```
-BEH PROJECT/
+```text
+QRShield/
 │
 ├── run_website.bat                    # Windows 1-click launcher
 ├── run_website.py                     # Python launcher (starts server & opens browser)
 ├── QRSHIELD_MASTER_GUIDE.md           # In-depth architectural & algorithm specification
 ├── README.md                          # Project documentation
 ├── .gitignore                         # Git exclusion rules
+│
+├── docs/                              # Project documentation assets
+│   └── screenshots/                   # Application screenshots
+│       ├── scanner_view.png           # Main scanner interface
+│       ├── verdict_safe.png           # Safe verdict modal
+│       └── verdict_suspicious.png     # High-risk threat alert modal
 │
 ├── frontend/                          # Clean, zero-dependency web frontend
 │   ├── index.html                     # Responsive UI layout & modal templates
@@ -283,17 +305,17 @@ BEH PROJECT/
 - **Operating System**: Windows, macOS, or Linux
 - **Web Browser**: Any modern browser (Google Chrome, Microsoft Edge, Mozilla Firefox, Safari)
 
-### Step 1: Clone or Open the Repository
+### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/your-username/qrshield.git
-cd qrshield
+git clone https://github.com/tanushreeburde/QRShield.git
+cd QRShield
 ```
 
 ### Step 2: Create a Python Virtual Environment
-Open PowerShell or your preferred terminal in the project directory:
+Open a terminal in the project root directory:
 
-```bash
-# Windows
+```powershell
+# Windows (PowerShell / Command Prompt)
 python -m venv backend\venv
 
 # macOS / Linux
@@ -301,19 +323,25 @@ python3 -m venv backend/venv
 ```
 
 ### Step 3: Install Required Dependencies
-```bash
-# Windows
+```powershell
+# Windows (PowerShell)
 .\backend\venv\Scripts\python.exe -m pip install -r backend\requirements.txt
+
+# Windows (Command Prompt)
+backend\venv\Scripts\python.exe -m pip install -r backend\requirements.txt
 
 # macOS / Linux
 ./backend/venv/bin/pip install -r backend/requirements.txt
 ```
 
 ### Step 4: Configure Environment Variables
-Copy the sample environment file to `.env`:
+Copy the template configuration file:
 
-```bash
-# Windows
+```powershell
+# Windows (PowerShell)
+Copy-Item backend\.env.example backend\.env
+
+# Windows (Command Prompt)
 copy backend\.env.example backend\.env
 
 # macOS / Linux
@@ -330,8 +358,8 @@ cp backend/.env.example backend/.env
 Double-click the **`run_website.bat`** file located in the project root directory.
 
 This script automatically:
-1. Activates the Python virtual environment.
-2. Boots the FastAPI backend server.
+1. Detects `backend\venv\Scripts\python.exe` (or falls back to system Python).
+2. Runs `run_website.py`.
 3. Automatically opens `http://127.0.0.1:8000` in your default web browser.
 
 ---
@@ -339,9 +367,12 @@ This script automatically:
 ### Option B: Terminal Command (Cross-Platform)
 From the project root directory:
 
-```bash
-# Windows
+```powershell
+# Windows (PowerShell)
 .\backend\venv\Scripts\python run_website.py
+
+# Windows (Command Prompt)
+backend\venv\Scripts\python run_website.py
 
 # macOS / Linux
 ./backend/venv/bin/python run_website.py
@@ -350,11 +381,16 @@ From the project root directory:
 ---
 
 ### Option C: Direct Uvicorn Launch
-You can also run Uvicorn directly from the `backend/` directory:
+From the `backend/` directory:
 
-```bash
+```powershell
+# Windows (PowerShell)
 cd backend
-..\backend\venv\Scripts\uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+.\venv\Scripts\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+# macOS / Linux
+cd backend
+./venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ---
@@ -386,33 +422,49 @@ QRShield includes an automated test suite comprising **38 unit and integration t
 ### Running the Test Suite
 From the project root:
 
-```bash
-# Windows
+```powershell
+# Windows (PowerShell)
 .\backend\venv\Scripts\python.exe -m pytest -v
 
+# Windows (Command Prompt)
+backend\venv\Scripts\python.exe -m pytest -v
+
 # macOS / Linux
-./backend/venv/bin/python -m pytest -v
+./backend/venv/bin/pytest -v
 ```
 
-**Test Suite Coverage Summary**:
-- **API Integration Tests** (9 tests): Validates health checks, malformed URL rejection, benign site scans, phishing lookalikes, SSRF block enforcement, history persistence, and image decoding.
-- **SSRF Guard Tests** (7 tests): Validates loopback IPv4/IPv6 blocking, cloud metadata (`169.254.169.254`) blocking, RFC-1918 private subnet blocking, and public domain authorization.
-- **URL Obfuscation Tests** (8 tests): Validates IP literals, `@` userinfo tricks, excessive length, shorteners, and percent-encoding checks.
-- **Redirect Tracker Tests** (3 tests): Validates single-hop, multi-hop cross-domain tracking, and intermediate SSRF redirection aborts.
-- **Lookalike & Homoglyph Tests** (4 tests): Validates Levenshtein distance against known brands, authentic domains, and Cyrillic Unicode homoglyphs.
-- **Webpage Form Tests** (3 tests): Validates detection of password fields, payment card inputs, and cross-domain action forms.
-- **Risk Engine Tests** (4 tests): Validates low risk, suspicious, compound high risk scoring, and unavailable check disclaimers.
+### Verified Test Results
+```text
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: D:\RBU\RBU Sem 5\BEH\Final Project\BEH PROJECT\BEH PROJECT
+collected 38 items
 
-*(All 38 tests pass cleanly in ~15–20 seconds).*
+backend/tests/integration/test_scan_api.py (9 tests) ........... PASSED
+backend/tests/unit/test_lookalike_detector.py (4 tests) ........ PASSED
+backend/tests/unit/test_redirect_tracker.py (3 tests) .......... PASSED
+backend/tests/unit/test_risk_engine.py (4 tests) ............... PASSED
+backend/tests/unit/test_ssrf_guard.py (7 tests) ................ PASSED
+backend/tests/unit/test_url_analyzer.py (8 tests) .............. PASSED
+backend/tests/unit/test_webpage_analyzer.py (3 tests) .......... PASSED
+
+======================= 38 passed, 2 warnings in 17.68s =======================
+```
+*(Note: The 2 warnings are upstream Starlette test deprecation notices regarding `HTTP_422_UNPROCESSABLE_ENTITY` and do not affect functionality).*
 
 ---
 
 ### Running Live End-to-End Verification
 To execute live scans against real scenarios (safe sites, SSRF loopback protections, typosquatting domains, and history recording):
 
-```bash
+```powershell
+# Windows
 cd backend
 .\venv\Scripts\python.exe scripts\verify_live_e2e.py
+
+# macOS / Linux
+cd backend
+./venv/bin/python scripts/verify_live_e2e.py
 ```
 
 ---
@@ -420,13 +472,14 @@ cd backend
 ## 👥 Team Members & College Submission
 
 **Course / Subject**: BEH Project (B.Tech Computer Science & Engineering- Cybersecurity)  
-**Academic Semester**: Semester 5 
-**Section**: D1
-**Institution**: Ramdeobaba University (RBU) 
+**Academic Semester**: Semester 5  
+**Section**: D1  
+**Institution**: Ramdeobaba University (RBU)  
 **Project Title**: QRShield — Explainable QR & URL Security Inspector for Quishing Mitigation  
 
 ### Team Details
 
+<<<<<<< HEAD
 | Sr. No. | Student Name | Roll Number | Role / Contribution |
 | :---: | :--- | :--- | :--- |
 | 1 | *Tanushree Burde* | *Roll No 2* | Frontend Architecture, UI/UX & WebRTC Camera Scanner |
@@ -434,13 +487,21 @@ cd backend
 | 3 | *Shivansh Gupta* | *Roll No 5* | Heuristics (WHOIS, Lookalike, Forms) & Test Suite |
 | 4 | *Shreyansh Dewangan* | *Roll No 24* | Database Persistence, API Routing & Documentation |
 
+=======
+| Sr. No. | Student Name | Roll Number |
+| :---: | :--- | :--- |
+| 1 | Tanushree Burde | D1-02 |
+| 2 | Nidhi Bhayani | D1-03 |
+| 3 | Shivansh Gupta | D1-05 |
+| 4 | Shreyansh Dewangan | D1-24 |
+>>>>>>> 415b3ae (docs: finalize README with screenshots, team details, and verified test results)
 
 ---
 
-## 📄 Disclaimer & License
+## 📄 Disclaimer & Academic Notice
 
-### Disclaimer
-QRShield is an educational and defensive cybersecurity project developed for academic evaluation. While it leverages robust deterministic heuristics, domain age verification, and redirect inspection, no automated tool can guarantee 100% detection of all emerging zero-day phishing techniques. Users should always exercise caution when interacting with untrusted digital links.
+### Academic Notice
+QRShield was developed as an academic project for the BEH curriculum at Ramdeobaba University. No open-source license is currently provided.
 
-### License
-This project is submitted for academic evaluation under the BEH curriculum at Ramdeobaba University. Open-sourced under the [MIT License](LICENSE) (or institutional academic license).
+### Security Disclaimer
+QRShield is an educational and defensive cybersecurity project developed for academic evaluation. While it leverages deterministic heuristics, domain age verification, and redirect inspection, automated phishing detection is not guaranteed to identify every malicious URL. Users should exercise caution when opening unverified links.
