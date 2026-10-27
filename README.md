@@ -428,10 +428,10 @@ cd backend
 
 | Sr. No. | Student Name | Roll Number | Role / Contribution |
 | :---: | :--- | :--- | :--- |
-| 1 | *Student Name 1* | *Roll No 1* | Frontend Architecture, UI/UX & WebRTC Camera Scanner |
-| 2 | *Student Name 2* | *Roll No 2* | Security Engine, SSRF Guard & Redirect Tracker |
-| 3 | *Student Name 3* | *Roll No 3* | Heuristics (WHOIS, Lookalike, Forms) & Test Suite |
-| 4 | *Student Name 4* | *Roll No 4* | Database Persistence, API Routing & Documentation |
+| 1 | *Tanushree Burde* | *Roll No 2* | Frontend Architecture, UI/UX & WebRTC Camera Scanner |
+| 2 | *Nidhi Bhayani* | *Roll No 3* | Security Engine, SSRF Guard & Redirect Tracker |
+| 3 | *Shivansh Gupta* | *Roll No 5* | Heuristics (WHOIS, Lookalike, Forms) & Test Suite |
+| 4 | *Shreyansh Dewangan* | *Roll No 24* | Database Persistence, API Routing & Documentation |
 
 *(Please replace the italicized placeholders above with your actual team member names, roll numbers, and assigned roles before submitting).*
 
