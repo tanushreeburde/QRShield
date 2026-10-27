@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRShield — Scan before you click</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Top Bar -->
+    <header class="top-nav">
+      <div class="nav-brand" id="brandBtn">
+        <div class="app-icon-squircle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="6" height="6" x="3" y="3" rx="1.5"/>
+            <rect width="6" height="6" x="15" y="3" rx="1.5"/>
+            <rect width="6" height="6" x="3" y="15" rx="1.5"/>
+            <path d="M15 15h2v2h-2zM19 15h2v2h-2zM15 19h2v2h-2zM19 19h2v2h-2zM10 7h1M10 11h4M10 17h1"/>
+          </svg>
+        </div>
+        <span class="app-brand-name">QRShield</span>
+      </div>
+
+      <button type="button" class="nav-icon-btn" id="historyNavBtn" title="View scan history" aria-label="Scan history">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Content Column -->
+    <main class="main-column">
+      <!-- QR Badge Icon -->
+      <div class="hero-qr-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="5" height="5" x="3" y="3" rx="1"/>
+          <rect width="5" height="5" x="16" y="3" rx="1"/>
+          <rect width="5" height="5" x="3" y="16" rx="1"/>
+          <path d="M21 16h-3a2 2 0 0 0-2 2v3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7M3 12h.01M12 3h.01M12 16v.01M16 12h1M21 12v.01M12 21v-1"/>
+        </svg>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-heading">
+        Scan before<br>you click.
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="hero-caption">
+        Check where a QR code leads before opening the link.
+      </p>
+
+      <!-- Action Stack -->
+      <div class="action-stack">
+        <!-- 1. Primary Action: Scan QR Code (Camera) -->
+        <button type="button" class="primary-scan-btn" id="openCameraBtn">
+          <div class="scan-icon-pill">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/>
+              <rect width="8" height="8" x="8" y="8" rx="1"/>
+            </svg>
+          </div>
+          <div class="btn-text-group">
+            <span class="btn-main-title">Scan QR code</span>
+            <span class="btn-sub-label">Open camera</span>
+          </div>
+          <div class="btn-arrow-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </button>
+
+        <!-- 2. Secondary Actions (Two Columns) -->
+        <div class="secondary-grid">
+          <!-- Upload image card -->
+          <button type="button" class="secondary-action-btn" id="uploadImageBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+              <circle cx="9" cy="9" r="2"/>
+              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+            </svg>
+            <span>Upload image</span>
+          </button>
+          <input type="file" id="filePickerInput" accept="image/*" style="display:none;">
+
+          <!-- Enter URL card -->
+          <button type="button" class="secondary-action-btn" id="toggleUrlInputBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <span>Enter URL</span>
+          </button>
+        </div>
+
+        <!-- Inline URL Entry Field (Expanded when "Enter URL" is toggled) -->
+        <form class="url-input-collapse" id="urlInputCollapse" style="display:none;">
+          <div class="url-bar-container">
+            <input type="text" id="urlInputField" placeholder="https://example.com" autocomplete="off" spellcheck="false" required>
+            <button type="button" class="url-inline-btn" id="pasteClipboardBtn">Paste</button>
+            <button type="submit" class="url-inline-submit" id="urlSubmitBtn">Scan</button>
+          </div>
+        </form>
+
+        <!-- Bottom Informational Banner Pill -->
+        <div class="info-banner-pill">
+          <div class="info-shield-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span class="info-banner-text">The destination is checked before you open it.</span>
+        </div>
+      </div>
+
+      <!-- Footer History Link -->
+      <button type="button" class="footer-history-link" id="footerHistoryLink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>View scan history</span>
+      </button>
+    </main>
+  </div>
+
+  <!-- Live Camera Modal -->
+  <div class="modal-backdrop" id="cameraModal" style="display:none;">
+    <div class="modal-card-box camera-card">
+      <div class="card-modal-header">
+        <span class="modal-header-title">Scan QR code</span>
+        <button type="button" class="close-x-btn" id="closeCameraBtn">&times;</button>
+      </div>
+      <div class="camera-stream-wrapper">
+        <video id="cameraVideo" playsinline muted autoplay></video>
+        <canvas id="cameraCanvas" style="display:none;"></canvas>
+        <div class="camera-target-reticle">
+          <div class="reticle-box"></div>
+        </div>
+        <button type="button" class="camera-flip-pill" id="cameraFlipBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 10c0-4.418-3.582-8-8-8s-8 3.582-8 8c0 1.258.29 2.449.81 3.509M4 14c0 4.418 3.582 8 8 8s8-3.582 8-8c0-1.258-.29-2.449-.81-3.509"/>
+            <path d="m3 11 2-3 2 3M21 13l-2 3-2-3"/>
+          </svg>
+          <span>Flip</span>
+        </button>
+      </div>
+      <div class="camera-card-footer">
+        Point your camera at a QR code to scan.
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State Modal -->
+  <div class="modal-backdrop" id="loadingModal" style="display:none;">
+    <div class="modal-card-box loading-card">
+      <div class="spinner-ring"></div>
+      <p class="loading-status-text" id="loadingStatusText">Analyzing destination...</p>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div class="modal-backdrop" id="resultModal" style="display:none;">
+    <div class="modal-card-box result-card" id="resultCardContent">
+      <!-- Injected via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Technical Breakdown ("Why?") Modal -->
+  <div class="modal-backdrop" id="detailsModal" style="display:none;">
+    <div class="modal-card-box details-card">
+      <div class="card-modal-header">
+        <span class="modal-header-title">Technical Details</span>
+        <button type="button" class="close-x-btn" id="closeDetailsBtn">&times;</button>
+      </div>
+      <div class="details-scroll-body" id="detailsBody">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- History Drawer -->
+  <div class="history-drawer-overlay" id="historyDrawer" style="display:none;">
+    <div class="history-drawer-panel">
+      <div class="drawer-header-row">
+        <span class="drawer-title-text">Scan History</span>
+        <div class="drawer-right-actions">
+          <button type="button" class="drawer-clear-btn" id="clearAllHistoryBtn">Clear</button>
+          <button type="button" class="close-x-btn" id="closeHistoryBtn">&times;</button>
+        </div>
+      </div>
+      <div class="drawer-history-items" id="historyItemsList">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-popup" id="toastPopup" style="display:none;"></div>
+
+  <script src="/js/jsqr.min.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

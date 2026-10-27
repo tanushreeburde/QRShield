@@ -1,0 +1,194 @@
+﻿# QRShield Risk Scoring Configuration
+# NOTE: These weights and thresholds represent documented baseline design values.
+# They are not absolute industry standards and should be calibrated against empirical ground-truth datasets.
+#
+# Scoring mechanics:
+# - Each finding triggered adds its configured weight to the cumulative scan score.
+# - If any finding is marked 'critical: true', the verdict automatically escalates to HIGH_RISK.
+# - Otherwise, total score maps to category via 'thresholds'.
+
+thresholds:
+  suspicious_min_score: 30
+  high_risk_min_score: 70
+
+findings:
+  # URL Analyzer Findings
+  INSECURE_SCHEME_HTTP:
+    weight: 20
+    severity: "medium"
+    critical: false
+    description: "The link uses unencrypted plain HTTP instead of HTTPS, exposing traffic to interception."
+
+  IP_LITERAL_HOST:
+    weight: 35
+    severity: "high"
+    critical: false
+    description: "The URL host is a raw IP address rather than a registered domain name, commonly used in phishing campaigns."
+
+  EXCESSIVE_URL_LENGTH:
+    weight: 15
+    severity: "low"
+    critical: false
+    description: "The URL is unusually long (>256 characters), which can be used to hide malicious parameters or evade visual scrutiny."
+
+  URL_OBFUSCATION_PERCENT_ENCODING:
+    weight: 20
+    severity: "medium"
+    critical: false
+    description: "Excessive percent-encoding detected in URL components, suggesting intentional obfuscation."
+
+  URL_SHORTENER_DETECTED:
+    weight: 25
+    severity: "medium"
+    critical: false
+    description: "The scanned QR points to a known URL-shortening service, concealing the true destination until resolved."
+
+  SUSPICIOUS_USERINFO_AT_SYMBOL:
+    weight: 40
+    severity: "high"
+    critical: false
+    description: "URL authority contains '@' symbol, which can mislead users about the actual destination server."
+
+  MULTIPLE_EMBEDDED_SCHEMES:
+    weight: 30
+    severity: "medium"
+    critical: false
+    description: "URL contains multiple embedded protocol schemes (e.g. https://example.com/https://other.com)."
+
+  MALFORMED_URL:
+    weight: 40
+    severity: "high"
+    critical: false
+    description: "The submitted string is not a syntactically valid HTTP/HTTPS URL."
+
+  # Redirect Tracker Findings
+  MULTIPLE_REDIRECTS:
+    weight: 15
+    severity: "low"
+    critical: false
+    description: "The URL performed 3 or more redirects before reaching the final destination."
+
+  REDIRECT_DOMAIN_CHANGE:
+    weight: 25
+    severity: "medium"
+    critical: false
+    description: "Redirect sequence traverses multiple distinct second-level domains."
+
+  INSECURE_REDIRECT_HOP:
+    weight: 25
+    severity: "medium"
+    critical: false
+    description: "Redirect chain downgraded connection from HTTPS to unencrypted HTTP."
+
+  DESTINATION_UNREACHABLE:
+    weight: 30
+    severity: "medium"
+    critical: false
+    description: "The destination host could not be reached (connection timeout, refused, or DNS failure)."
+
+  TLS_ERROR:
+    weight: 40
+    severity: "high"
+    critical: false
+    description: "TLS certificate verification failed along the redirect chain."
+
+  MAX_REDIRECTS_EXCEEDED:
+    weight: 40
+    severity: "high"
+    critical: false
+    description: "Destination exceeded maximum allowed redirect hops without terminating."
+
+  SSRF_BLOCKED_HOP:
+    weight: 80
+    severity: "high"
+    critical: true
+    description: "Outbound request was blocked because target resolved to a private, loopback, or reserved IP address."
+
+  # Domain Analyzer Findings
+  UNCOMMON_TLD:
+    weight: 20
+    severity: "medium"
+    critical: false
+    description: "Destination uses a top-level domain frequently associated with elevated abuse and disposable domains."
+
+  RECENTLY_REGISTERED_DOMAIN:
+    weight: 35
+    severity: "high"
+    critical: false
+    description: "Domain was registered very recently (less than 30 days old), a common indicator of throwaway attack infrastructure."
+
+  DOMAIN_AGE_UNAVAILABLE:
+    weight: 0
+    severity: "info"
+    critical: false
+    description: "Domain WHOIS registration age was unavailable or privacy-protected; not factored into risk score."
+
+  # Lookalike Detector Findings
+  LOOKALIKE_DOMAIN_SUSPECTED:
+    weight: 50
+    severity: "high"
+    critical: false
+    description: "Domain exhibits high typographic edit similarity to a known brand name (potential typosquatting)."
+
+  HOMOGLYPH_DOMAIN_DETECTED:
+    weight: 55
+    severity: "high"
+    critical: false
+    description: "Domain contains internationalized Unicode characters visually confusable with standard Latin characters."
+
+  # Webpage Analyzer Findings
+  LOGIN_FORM_DETECTED:
+    weight: 30
+    severity: "medium"
+    critical: false
+    description: "The destination webpage presents a login or password input form."
+
+  PAYMENT_FORM_DETECTED:
+    weight: 40
+    severity: "high"
+    critical: false
+    description: "The destination webpage presents payment or credit card input fields."
+
+  FORM_SUBMITS_TO_DIFFERENT_DOMAIN:
+    weight: 45
+    severity: "high"
+    critical: false
+    description: "Webpage form action submits sensitive credentials to a different external domain."
+
+  PAGE_UNREACHABLE_FOR_ANALYSIS:
+    weight: 20
+    severity: "medium"
+    critical: false
+    description: "Page content could not be fetched for static HTML form inspection."
+
+  JS_HEAVY_PAGE_LIMITED_ANALYSIS:
+    weight: 0
+    severity: "info"
+    critical: false
+    description: "Destination page appears to be a client-rendered SPA; static HTML inspection has limited visibility."
+
+  # Brand Context Findings
+  BRAND_CONTEXT_MISMATCH:
+    weight: 45
+    severity: "high"
+    critical: false
+    description: "Claimed or recognized brand context does not match the actual destination domain."
+
+  # Reputation Client Findings
+  REPUTATION_MATCH_FOUND:
+    weight: 90
+    severity: "high"
+    critical: true
+    description: "Domain or URL matched a known malicious entry in threat intelligence databases."
+
+  REPUTATION_UNAVAILABLE:
+    weight: 0
+    severity: "info"
+    critical: false
+    description: "Threat reputation intelligence check was unavailable or unconfigured; not factored into risk score."
+
+  LIMITED_ANALYSIS_COVERAGE:
+    weight: 0
+    severity: "info"
+    critical: false
+    description: "Multiple inspection modules could not be completed; verdict is based on partial analysis coverage."
