@@ -433,7 +433,6 @@ cd backend
 | 3 | *Shivansh Gupta* | *Roll No 5* | Heuristics (WHOIS, Lookalike, Forms) & Test Suite |
 | 4 | *Shreyansh Dewangan* | *Roll No 24* | Database Persistence, API Routing & Documentation |
 
-*(Please replace the italicized placeholders above with your actual team member names, roll numbers, and assigned roles before submitting).*
 
 ---
 
