@@ -419,9 +419,10 @@ cd backend
 
 ## 👥 Team Members & College Submission
 
-**Course / Subject**: BEH Project (B.Tech Computer Science & Engineering)  
-**Academic Semester**: Semester 5  
-**Institution**: Ramdeobaba University (RBU)  
+**Course / Subject**: BEH Project (B.Tech Computer Science & Engineering- Cybersecurity)  
+**Academic Semester**: Semester 5 
+**Section**: D1
+**Institution**: Ramdeobaba University (RBU) 
 **Project Title**: QRShield — Explainable QR & URL Security Inspector for Quishing Mitigation  
 
 ### Team Details
